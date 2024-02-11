@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea11 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend11 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series11 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
@@ -41,11 +41,12 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.comboBoxPort = new System.Windows.Forms.ComboBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button_Connect = new System.Windows.Forms.Button();
-            this.button_Disconnect = new System.Windows.Forms.Button();
-            this.LabelStatus = new System.Windows.Forms.Label();
+            this.label_Real_Time = new System.Windows.Forms.Label();
+            this.label1_Status = new System.Windows.Forms.Label();
+            this.button2_Disconnect = new System.Windows.Forms.Button();
+            this.button1_Connect = new System.Windows.Forms.Button();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.panel2.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -89,12 +90,18 @@
             // 
             // textBox2
             // 
+            this.textBox2.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.textBox2.Enabled = false;
             this.textBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.textBox2.Location = new System.Drawing.Point(530, 112);
+            this.textBox2.ForeColor = System.Drawing.Color.Black;
+            this.textBox2.Location = new System.Drawing.Point(530, 83);
             this.textBox2.Margin = new System.Windows.Forms.Padding(4);
+            this.textBox2.MaxLength = 0;
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(335, 38);
+            this.textBox2.ReadOnly = true;
+            this.textBox2.Size = new System.Drawing.Size(138, 38);
             this.textBox2.TabIndex = 2;
+            this.textBox2.WordWrap = false;
             this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
             // 
             // progressBar1
@@ -103,7 +110,7 @@
             this.progressBar1.Margin = new System.Windows.Forms.Padding(4);
             this.progressBar1.Maximum = 1023;
             this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(767, 92);
+            this.progressBar1.Size = new System.Drawing.Size(768, 51);
             this.progressBar1.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             this.progressBar1.TabIndex = 3;
             this.progressBar1.Click += new System.EventHandler(this.progressBar1_Click);
@@ -111,32 +118,32 @@
             // chart1
             // 
             this.chart1.BorderlineColor = System.Drawing.Color.IndianRed;
-            chartArea2.AxisX.MajorGrid.LineColor = System.Drawing.Color.LightGray;
-            chartArea2.AxisY.MajorGrid.LineColor = System.Drawing.Color.LightGray;
-            chartArea2.CursorX.SelectionColor = System.Drawing.Color.Transparent;
-            chartArea2.Name = "ChartArea1";
-            chartArea2.ShadowColor = System.Drawing.Color.White;
-            this.chart1.ChartAreas.Add(chartArea2);
-            legend2.Enabled = false;
-            legend2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold);
-            legend2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-            legend2.IsTextAutoFit = false;
-            legend2.Name = "Legend1";
-            this.chart1.Legends.Add(legend2);
-            this.chart1.Location = new System.Drawing.Point(58, 250);
+            chartArea11.AxisX.MajorGrid.LineColor = System.Drawing.Color.LightGray;
+            chartArea11.AxisY.MajorGrid.LineColor = System.Drawing.Color.LightGray;
+            chartArea11.CursorX.SelectionColor = System.Drawing.Color.Transparent;
+            chartArea11.Name = "ChartArea1";
+            chartArea11.ShadowColor = System.Drawing.Color.White;
+            this.chart1.ChartAreas.Add(chartArea11);
+            legend11.Enabled = false;
+            legend11.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold);
+            legend11.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+            legend11.IsTextAutoFit = false;
+            legend11.Name = "Legend1";
+            this.chart1.Legends.Add(legend11);
+            this.chart1.Location = new System.Drawing.Point(34, 175);
             this.chart1.Margin = new System.Windows.Forms.Padding(4);
             this.chart1.Name = "chart1";
-            series2.BorderWidth = 2;
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series2.Color = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-            series2.IsVisibleInLegend = false;
-            series2.Legend = "Legend1";
-            series2.Name = "Series1";
-            series2.ShadowColor = System.Drawing.Color.Transparent;
-            series2.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Time;
-            this.chart1.Series.Add(series2);
-            this.chart1.Size = new System.Drawing.Size(1220, 303);
+            series11.BorderWidth = 4;
+            series11.ChartArea = "ChartArea1";
+            series11.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series11.Color = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+            series11.IsVisibleInLegend = false;
+            series11.Legend = "Legend1";
+            series11.Name = "Series1";
+            series11.ShadowColor = System.Drawing.Color.Transparent;
+            series11.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Time;
+            this.chart1.Series.Add(series11);
+            this.chart1.Size = new System.Drawing.Size(1390, 296);
             this.chart1.TabIndex = 5;
             this.chart1.Text = "chart1";
             this.chart1.Click += new System.EventHandler(this.chart1_Click);
@@ -158,74 +165,111 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.White;
-            this.panel1.Controls.Add(this.LabelStatus);
-            this.panel1.Controls.Add(this.button_Disconnect);
-            this.panel1.Controls.Add(this.button_Connect);
-            this.panel1.Controls.Add(this.comboBoxPort);
-            this.panel1.Controls.Add(this.button1);
+            this.panel1.Controls.Add(this.label_Real_Time);
+            this.panel1.Controls.Add(this.label1_Status);
+            this.panel1.Controls.Add(this.button2_Disconnect);
+            this.panel1.Controls.Add(this.button1_Connect);
             this.panel1.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.panel1.Location = new System.Drawing.Point(34, 18);
+            this.panel1.Location = new System.Drawing.Point(34, 12);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(310, 194);
+            this.panel1.Size = new System.Drawing.Size(310, 138);
             this.panel1.TabIndex = 8;
+            this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
-            // comboBoxPort
+            // label_Real_Time
             // 
-            this.comboBoxPort.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.comboBoxPort.FormattingEnabled = true;
-            this.comboBoxPort.Location = new System.Drawing.Point(140, 25);
-            this.comboBoxPort.Name = "comboBoxPort";
-            this.comboBoxPort.Size = new System.Drawing.Size(121, 24);
-            this.comboBoxPort.TabIndex = 1;
+            this.label_Real_Time.AutoSize = true;
+            this.label_Real_Time.Location = new System.Drawing.Point(24, 98);
+            this.label_Real_Time.Name = "label_Real_Time";
+            this.label_Real_Time.Size = new System.Drawing.Size(81, 20);
+            this.label_Real_Time.TabIndex = 3;
+            this.label_Real_Time.Text = "00:00:00";
+            this.label_Real_Time.Click += new System.EventHandler(this.label1_Click);
             // 
-            // button1
+            // label1_Status
             // 
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.button1.Location = new System.Drawing.Point(14, 21);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(102, 28);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Scan Ports";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.label1_Status.AutoSize = true;
+            this.label1_Status.Location = new System.Drawing.Point(20, 54);
+            this.label1_Status.Name = "label1_Status";
+            this.label1_Status.Size = new System.Drawing.Size(59, 20);
+            this.label1_Status.TabIndex = 2;
+            this.label1_Status.Text = "label1";
             // 
-            // button_Connect
+            // button2_Disconnect
             // 
-            this.button_Connect.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.button_Connect.Location = new System.Drawing.Point(14, 58);
-            this.button_Connect.Name = "button_Connect";
-            this.button_Connect.Size = new System.Drawing.Size(102, 28);
-            this.button_Connect.TabIndex = 2;
-            this.button_Connect.Text = "Connect";
-            this.button_Connect.UseVisualStyleBackColor = true;
-            this.button_Connect.Click += new System.EventHandler(this.button_Connect_Click);
+            this.button2_Disconnect.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.button2_Disconnect.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Red;
+            this.button2_Disconnect.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Red;
+            this.button2_Disconnect.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button2_Disconnect.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.button2_Disconnect.Location = new System.Drawing.Point(24, 20);
+            this.button2_Disconnect.Name = "button2_Disconnect";
+            this.button2_Disconnect.Size = new System.Drawing.Size(137, 31);
+            this.button2_Disconnect.TabIndex = 1;
+            this.button2_Disconnect.Text = "Disconnect";
+            this.button2_Disconnect.UseVisualStyleBackColor = false;
+            this.button2_Disconnect.Click += new System.EventHandler(this.button2_Disconnect_Click);
             // 
-            // button_Disconnect
+            // button1_Connect
             // 
-            this.button_Disconnect.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.button_Disconnect.Location = new System.Drawing.Point(14, 125);
-            this.button_Disconnect.Name = "button_Disconnect";
-            this.button_Disconnect.Size = new System.Drawing.Size(102, 28);
-            this.button_Disconnect.TabIndex = 3;
-            this.button_Disconnect.Text = "Disconnect";
-            this.button_Disconnect.UseVisualStyleBackColor = true;
-            this.button_Disconnect.Click += new System.EventHandler(this.button_Disconnect_Click);
+            this.button1_Connect.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.button1_Connect.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LimeGreen;
+            this.button1_Connect.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1_Connect.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.button1_Connect.Location = new System.Drawing.Point(24, 20);
+            this.button1_Connect.Name = "button1_Connect";
+            this.button1_Connect.Size = new System.Drawing.Size(137, 31);
+            this.button1_Connect.TabIndex = 0;
+            this.button1_Connect.Text = "Connect";
+            this.button1_Connect.UseVisualStyleBackColor = false;
+            this.button1_Connect.Click += new System.EventHandler(this.button1_Connect_Click);
             // 
-            // LabelStatus
+            // tableLayoutPanel1
             // 
-            this.LabelStatus.AutoSize = true;
-            this.LabelStatus.Location = new System.Drawing.Point(167, 133);
-            this.LabelStatus.Name = "LabelStatus";
-            this.LabelStatus.Size = new System.Drawing.Size(59, 20);
-            this.LabelStatus.TabIndex = 4;
-            this.LabelStatus.Text = "label1";
+            this.tableLayoutPanel1.BackColor = System.Drawing.Color.White;
+            this.tableLayoutPanel1.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
+            this.tableLayoutPanel1.ColumnCount = 1;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 5F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 5F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 5F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 5F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 5F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 5F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 5F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 5F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 5F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 5F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 5F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 5F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 5F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 5F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 5F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 5F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 5F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 5F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 5F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 5F));
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(34, 522);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 2;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1390, 99);
+            this.tableLayoutPanel1.TabIndex = 9;
+            this.tableLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel1_Paint);
+            // 
+            // timer1
+            // 
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoValidate = System.Windows.Forms.AutoValidate.Disable;
             this.BackColor = System.Drawing.Color.CadetBlue;
-            this.ClientSize = new System.Drawing.Size(1310, 559);
+            this.ClientSize = new System.Drawing.Size(1450, 763);
+            this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.chart1);
             this.Controls.Add(this.progressBar1);
@@ -258,11 +302,12 @@
         private System.Windows.Forms.Panel panel2;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.ComboBox comboBoxPort;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button_Connect;
-        private System.Windows.Forms.Button button_Disconnect;
-        private System.Windows.Forms.Label LabelStatus;
+        private System.Windows.Forms.Button button1_Connect;
+        private System.Windows.Forms.Label label1_Status;
+        private System.Windows.Forms.Button button2_Disconnect;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.Label label_Real_Time;
+        private System.Windows.Forms.Timer timer1;
     }
 }
 
