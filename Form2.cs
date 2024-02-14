@@ -12,6 +12,7 @@ using System.Windows.Forms.DataVisualization.Charting;
 using System.Linq.Expressions;
 using System.Xml.Linq;
 using System.Reflection;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 
 namespace program_2
@@ -19,7 +20,8 @@ namespace program_2
     public partial class Form1 : Form
     {
         public delegate void d1(string indata);
-        private Series series;
+        private Series series1; // Prvá série pre prvé zobrazovanie
+        private Series series2; // Druhá série pre druhé zobrazovanie
         int XLabelCount;
         int rowIndex;
 
@@ -29,9 +31,12 @@ namespace program_2
            serialPort1.DataReceived += SerialPort1_DataReceived; // Subscribe to the DataReceived event
 
             // Inicializácia sady dát pre Chart
-            series = new Series();
-            chart1.Series.Add(series);
-            series.ChartType = SeriesChartType.Line; // Určuje typ grafu (v tomto prípade čiara)
+            series1 = new Series();
+            series2 = new Series();
+            chart1.Series.Add(series1);
+            chart1.Series.Add(series2);
+            series1.ChartType = SeriesChartType.Line; // Určuje typ grafu (v tomto prípade čiara)
+            series2.ChartType = SeriesChartType.Line;
             chart1.ChartAreas[0].AxisY.Minimum = 0; // Nastavenie minimálnej zobrazenej hodnoty osi Y
             chart1.ChartAreas[0].AxisY.Maximum = 5; // Nastavenie maximálnej zobrazenej hodnoty osi Y
             connection_test();
@@ -61,6 +66,7 @@ namespace program_2
             char firstchar;
             Single numdata;
             Single volts;
+            Single volts2;
             firstchar = indata[0];
             switch (firstchar)
             {
@@ -83,10 +89,52 @@ namespace program_2
                     }
                     break;
                 case 'v':
+                    //získaná hodnota č.1
                     numdata = Convert.ToSingle(indata.Substring(1));
                     volts = numdata * 5 / 1024;
                     TextBox2Value(volts);   //zobrazí aktuálnu hodnotu v okne TextBox2
-                    AddDataPointToSeries(timeString, volts);    //zobrazenie hodnôt v grafe
+                    AddDataPointToSeries(timeString, volts, series1); // Pridanie hodnôt do prvej série
+
+                    // Zmena farby čiary na Y-ovej osi pre hodnotu č.1
+                    DataPoint lastPoint = series1.Points.Last();
+                    lastPoint.Color = (volts >= 4) ? Color.Red : (volts >= 3) ? Color.Orange : Color.Green;
+                    lastPoint.BorderWidth = 4;
+                    progressBar1.Value = Convert.ToInt16(indata.Substring(1));  //progressBar1
+
+                    //získaná hodnota č.2
+                    volts2 = Convert.ToSingle(indata.Substring(1)) * 3 / 1024;
+                    TextBox3Value(volts2); // Zobrazenie hodnoty v TextBox3
+                    AddDataPointToSeries(timeString, volts2, series2); // Pridanie hodnôt do druhej série
+
+                    // Zmena farby čiary na Y-ovej osi pre hodnotu č.1 pre hodnotu č.2
+                    DataPoint lastPoint2 = series2.Points.Last();
+                    lastPoint2.Color = (volts2 >= 3) ? Color.DarkViolet : (volts2 >= 2) ? Color.Purple : Color.Blue;
+                    lastPoint2.BorderWidth = 4;
+                    progressBar1.Value = Convert.ToInt16(indata.Substring(1));  //progressBar1
+
+
+
+
+
+
+
+                    //TABULKA
+                    XLabelCount++;
+                    int rowIndex = tableLayoutPanel1.ColumnCount++;
+
+                    if (rowIndex < 5)
+                    {
+                        tableLayoutPanel1.Controls.Add(new Label() { Text = String.Format("{00:00:00}", timeString) }, rowIndex, 0);       //zapísanie času do tabuľky
+                        tableLayoutPanel1.Controls.Add(new Label() { Text = String.Format("{0:0.00}", volts) }, rowIndex, 1);             //zapísanie hodnoty zo snímača do tabuľky
+                    }
+                    else
+                    {
+                        tableLayoutPanel1.Controls.Add(new Label() { Text = String.Format("{00:00:00}", timeString) }, rowIndex - 1, 0);       //zapísanie času do tabuľky
+                        tableLayoutPanel1.Controls.Add(new Label() { Text = String.Format("{0:0.00}", volts) }, rowIndex - 1, 1);
+                    }
+
+
+
                     
 
 
@@ -97,35 +145,30 @@ namespace program_2
 
 
 
-                    // Zmena farby čiary na Y-ovej osi
-                    DataPoint lastPoint = series.Points.Last();
-                    lastPoint.Color = (volts >= 4) ? Color.Red : (volts >= 3) ? Color.Orange : Color.Green;
-                    lastPoint.BorderWidth = 4;
-                    progressBar1.Value = Convert.ToInt16(indata.Substring(1));  //progressBar1
 
 
-                    // TABULKA
-                    XLabelCount++;
-                      int rowIndex = tableLayoutPanel1.ColumnCount++;
-                      tableLayoutPanel1.Controls.Add(new Label() { Text = String.Format("{00:00:00}", timeString)}, rowIndex, 0);       //zapísanie času do tabuľky
-                      tableLayoutPanel1.Controls.Add(new Label() { Text = String.Format("{0:0.00}", volts) }, rowIndex, 1);             //zapísanie hodnoty zo snímača do tabuľky
 
 
-                        /*  XLabelCount++;
-                        if (XLabelCount < 14)
-                        {
-                            int rowIndex = tableLayoutPanel1.RowCount++;
-                            tableLayoutPanel1.Controls.Add(new Label() { Text = XLabelCount.ToString() }, 0, 0);
-                            tableLayoutPanel1.Controls.Add(new Label() { Text = volts.ToString() }, 0, 1);
-                        }
-                        else
-                        {
-                            tableLayoutPanel1.GetControlFromPosition(0, 0).Text = XLabelCount.ToString();
-                            tableLayoutPanel1.GetControlFromPosition(0, 1).Text = volts.ToString();
-                            rowIndex = 0;
-                        }
-                        */
-                        break;
+
+
+
+
+
+                    /*  XLabelCount++;
+                    if (XLabelCount < 14)
+                    {
+                        int rowIndex = tableLayoutPanel1.RowCount++;
+                        tableLayoutPanel1.Controls.Add(new Label() { Text = XLabelCount.ToString() }, 0, 0);
+                        tableLayoutPanel1.Controls.Add(new Label() { Text = volts.ToString() }, 0, 1);
+                    }
+                    else
+                    {
+                        tableLayoutPanel1.GetControlFromPosition(0, 0).Text = XLabelCount.ToString();
+                        tableLayoutPanel1.GetControlFromPosition(0, 1).Text = volts.ToString();
+                        rowIndex = 0;
+                    }
+                    */
+                    break;
             }
         }
 
@@ -219,30 +262,26 @@ namespace program_2
         private void TextBox2Value(float volts)
         {
             textBox2.Text = String.Format("{0:0.00}", volts);
-            if (volts >= 4)
-            {
-                textBox2.BackColor = Color.Red;
-            }
-            else if (volts >= 3)
-            {
-                textBox2.BackColor = Color.Orange;
-            }
-            else
-            {
-                textBox2.BackColor = SystemColors.Window;
-            }
+            textBox2.BackColor = volts >= 4 ? Color.Red : volts >= 3 ? Color.Orange : SystemColors.Window;
         }
 
-        private void AddDataPointToSeries(string timeString, float volts)
+        private void TextBox3Value(float volts)
+        {
+            textBox3.Text = String.Format("{0:0.00}", volts);
+            textBox3.BackColor = volts >= 4 ? Color.Red : volts >= 3 ? Color.Orange : SystemColors.Window;
+        }
+
+        //OBMEDZENIE ZOBRAZENIA GRAFU NA MAX. 50 BODOV
+        private void AddDataPointToSeries(string timeString, float volts, Series series)
         {
             if (series.Points.Count < 50)
             {
-                series.Points.AddXY(timeString, volts); // Pridá nový bod do série
+                series.Points.AddXY(timeString, volts); // Pridá nový bod do grafu
             }
             else
             {
-                series.Points.RemoveAt(0); // Odstráni prvý (najstarší) bod zo série
-                series.Points.AddXY(timeString, volts); // Pridá nový bod do série
+                series.Points.RemoveAt(0); // Odstráni prvý (najstarší) bod z grafu
+                series.Points.AddXY(timeString, volts); // Pridá nový bod do grafu
             }
         }
     }
