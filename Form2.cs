@@ -68,6 +68,8 @@ namespace program_2
             Single volts;
             Single volts2;
             firstchar = indata[0];
+            checkBox2.CheckState = CheckState.Checked;
+            checkBox3.CheckState = CheckState.Checked;
             switch (firstchar)
             {
                 case 'Z':
@@ -89,53 +91,71 @@ namespace program_2
                     }
                     break;
                 case 'v':
-                    //získaná hodnota č.1
-                    numdata = Convert.ToSingle(indata.Substring(1));
-                    volts = numdata * 5 / 1024;
-                    TextBox2Value(volts);   //zobrazí aktuálnu hodnotu v okne TextBox2
-                    AddDataPointToSeries(timeString, volts, series1); // Pridanie hodnôt do prvej série
-
-                    // Zmena farby čiary na Y-ovej osi pre hodnotu č.1
-                    DataPoint lastPoint = series1.Points.Last();
-                    lastPoint.Color = (volts >= 4) ? Color.Red : (volts >= 3) ? Color.Orange : Color.Green;
-                    lastPoint.BorderWidth = 4;
-                    progressBar1.Value = Convert.ToInt16(indata.Substring(1));  //progressBar1
-
-                    //získaná hodnota č.2
-                    volts2 = Convert.ToSingle(indata.Substring(1)) * 3 / 1024;
-                    TextBox3Value(volts2); // Zobrazenie hodnoty v TextBox3
-                    AddDataPointToSeries(timeString, volts2, series2); // Pridanie hodnôt do druhej série
-
-                    // Zmena farby čiary na Y-ovej osi pre hodnotu č.1 pre hodnotu č.2
-                    DataPoint lastPoint2 = series2.Points.Last();
-                    lastPoint2.Color = (volts2 >= 3) ? Color.DarkViolet : (volts2 >= 2) ? Color.Purple : Color.Blue;
-                    lastPoint2.BorderWidth = 4;
-                    progressBar1.Value = Convert.ToInt16(indata.Substring(1));  //progressBar1
-
-
-
-
-
-
-
-                    //TABULKA
-                    XLabelCount++;
-                    int rowIndex = tableLayoutPanel1.ColumnCount++;
-
-                    if (rowIndex < 5)
+                    //Hodnota č.1
+                    if (checkBox2.Checked == true)
                     {
-                        tableLayoutPanel1.Controls.Add(new Label() { Text = String.Format("{00:00:00}", timeString) }, rowIndex, 0);       //zapísanie času do tabuľky
-                        tableLayoutPanel1.Controls.Add(new Label() { Text = String.Format("{0:0.00}", volts) }, rowIndex, 1);             //zapísanie hodnoty zo snímača do tabuľky
+                        textBox2.Visible = true;
+                        //získaná hodnota č.1
+                        numdata = Convert.ToSingle(indata.Substring(1));
+                        volts = numdata * 5 / 1024;
+                        TextBox2Value(volts);   //zobrazí aktuálnu hodnotu v okne TextBox2
+                        AddDataPointToSeries(timeString, volts, series1); // Pridanie hodnôt do prvej série
+
+                        // Zmena farby čiary na Y-ovej osi pre hodnotu č.1
+                        DataPoint lastPoint = series1.Points.Last();
+                        lastPoint.Color = (volts >= 4) ? Color.Red : (volts >= 3) ? Color.Orange : Color.Green;
+                        lastPoint.BorderWidth = 4;
+                        progressBar1.Value = Convert.ToInt16(indata.Substring(1));  //progressBar1
+
+                        //TABULKA
+                        XLabelCount++;
+                        int rowIndex = tableLayoutPanel1.ColumnCount++;
+
+                        if (rowIndex < 5)
+                        {
+                            tableLayoutPanel1.Controls.Add(new Label() { Text = String.Format("{00:00:00}", timeString) }, rowIndex, 0);       //zapísanie času do tabuľky
+                            tableLayoutPanel1.Controls.Add(new Label() { Text = String.Format("{0:0.00}", volts) }, rowIndex, 1);             //zapísanie hodnoty zo snímača do tabuľky
+                        }
+                        else
+                        {
+                            tableLayoutPanel1.Controls.Add(new Label() { Text = String.Format("{00:00:00}", timeString) }, rowIndex - 1, 0);       //zapísanie času do tabuľky
+                            tableLayoutPanel1.Controls.Add(new Label() { Text = String.Format("{0:0.00}", volts) }, rowIndex - 1, 1);
+                        }
                     }
                     else
                     {
-                        tableLayoutPanel1.Controls.Add(new Label() { Text = String.Format("{00:00:00}", timeString) }, rowIndex - 1, 0);       //zapísanie času do tabuľky
-                        tableLayoutPanel1.Controls.Add(new Label() { Text = String.Format("{0:0.00}", volts) }, rowIndex - 1, 1);
+                        textBox2.Visible = false;
+                    }
+
+                    //hodnota č.2
+                    if (checkBox3.Checked == true)
+                    {
+                        textBox3.Visible = true;
+                        //získaná hodnota č.2
+                        volts2 = Convert.ToSingle(indata.Substring(1)) * 3 / 1024;
+                        TextBox3Value(volts2); // Zobrazenie hodnoty v TextBox3
+                        AddDataPointToSeries(timeString, volts2, series2); // Pridanie hodnôt do druhej série
+
+                        // Zmena farby čiary na Y-ovej osi pre hodnotu č.1 pre hodnotu č.2
+                        DataPoint lastPoint2 = series2.Points.Last();
+                        lastPoint2.Color = (volts2 >= 2) ? Color.Purple : (volts2 >= 1) ? Color.Violet : Color.Blue;
+                        lastPoint2.BorderWidth = 4;
+                        progressBar1.Value = Convert.ToInt16(indata.Substring(1));  //progressBar1
+                    }
+                    else {
+                        textBox3.Visible = false;
                     }
 
 
 
-                    
+
+
+
+
+
+
+
+
 
 
 
@@ -262,19 +282,19 @@ namespace program_2
         private void TextBox2Value(float volts)
         {
             textBox2.Text = String.Format("{0:0.00}", volts);
-            textBox2.BackColor = volts >= 4 ? Color.Red : volts >= 3 ? Color.Orange : SystemColors.Window;
+            textBox2.BackColor = volts >= 4 ? Color.Red : volts >= 3 ? Color.Orange : Color.Green;
         }
 
         private void TextBox3Value(float volts)
         {
             textBox3.Text = String.Format("{0:0.00}", volts);
-            textBox3.BackColor = volts >= 4 ? Color.Red : volts >= 3 ? Color.Orange : SystemColors.Window;
+            textBox3.BackColor = volts >= 2 ? Color.Purple : volts >= 1 ? Color.Violet : Color.Blue;
         }
 
         //OBMEDZENIE ZOBRAZENIA GRAFU NA MAX. 50 BODOV
         private void AddDataPointToSeries(string timeString, float volts, Series series)
         {
-            if (series.Points.Count < 50)
+            if ((series1.Points.Count < 50 && series2.Points.Count < 50))
             {
                 series.Points.AddXY(timeString, volts); // Pridá nový bod do grafu
             }
